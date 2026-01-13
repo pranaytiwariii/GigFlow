@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./db/connect.js";
 import authRouter from "./routes/authRoutes.js";
+import gigRouter from "./routes/gigRoutes.js";
+import bidRouter from "./routes/bidRoutes.js";
 
 dotenv.config();
 
@@ -15,6 +17,8 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use(cors());
 
 app.use("/api/auth", authRouter);
+app.use("/api/gigs", gigRouter);
+app.use("/api/bids", bidRouter);
 
 app.get("/api", (_req, res) => {
   res.json({ message: "Hello from TypeScript backend!" });
