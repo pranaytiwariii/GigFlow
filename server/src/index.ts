@@ -1,14 +1,39 @@
 import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import connectDB from "./db/connect.js";
+import authRouter from "./routes/authRoutes.js";
+
+dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cookieParser(process.env.JWT_SECRET));
+app.use(cors());
+
+app.use("/api/auth", authRouter);
 
 app.get("/api", (_req, res) => {
   res.json({ message: "Hello from TypeScript backend!" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const start = async () => {
+  try {
+    const mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+      throw new Error("MONGO_URI is not defined in .env file");
+    }
+    await connectDB(mongoUri);
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
+
