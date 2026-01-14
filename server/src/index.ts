@@ -14,10 +14,16 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
-app.use(cors({
-  origin: ["http://localhost:5173","http://localhost:8080"],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:8080",
+      "https://gig-flow-peach-nu.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 
 app.use("/api/auth", authRouter);
 app.use("/api/gigs", gigRouter);
@@ -43,4 +49,3 @@ const start = async () => {
 };
 
 start();
-
