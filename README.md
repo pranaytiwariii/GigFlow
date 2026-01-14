@@ -106,7 +106,7 @@ Start the frontend development server:
 npm run dev
 ```
 
-The app will be available at `http://localhost:8080`.
+The app will be available at `http://localhost:5173`.
 
 ---
 
